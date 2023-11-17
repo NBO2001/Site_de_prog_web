@@ -1,0 +1,39 @@
+version: '3.7'
+
+services:
+  express:
+    image: node:21-alpine3.18
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/app
+    command: /app/entrypoint.sh
+    networks:
+      - game-net
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: G@mes123
+      MYSQL_DATABASE: myapp
+    networks:
+      - game-net
+
+  phpmyadm:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      MYSQL_ROOT_PASSWORD: G@mes123
+    ports:
+      - 8080:80
+    networks:
+      - game-net
+
+networks:
+  game-net:

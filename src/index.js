@@ -12,6 +12,8 @@ const uuid = require('uuid');
 
 require('dotenv').config();
 
+const PORT = process.env.PORT ? process.env.PORT: 3000;
+
 const app = express();
 
 app.use(cookieParser());
@@ -65,6 +67,6 @@ app.use("/js", [
 app.use(logger("short"));
 app.use(router);
 
-app.listen(process.env.PORT, () => {
-    console.log(`Express app iniciada na porta ${process.env.PORT}.`);
+app.listen(PORT, () => {
+    console.log(`Express app iniciada na porta ${PORT}.`);
 })
